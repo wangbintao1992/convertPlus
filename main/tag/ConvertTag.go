@@ -21,8 +21,7 @@ type ConvertTag struct {
 	FieldMetaData
 }
 
-func (c *ConvertTag) getConvertTag(souceField reflect.StructField) (convertTag ConvertTag) {
-
+func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag) {
 	return convertTag
 }
 
