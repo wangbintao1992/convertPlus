@@ -1,5 +1,6 @@
 package tag
 
+//tag实体
 type ConvertTag struct {
 	//是否缓存
 	Cached bool
