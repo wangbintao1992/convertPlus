@@ -1,7 +1,8 @@
 package main
 
 import (
-	"convertPlus/main/FieldHandler"
+	"convertPlus/main/Control"
+	"convertPlus/main/tag"
 	"reflect"
 )
 
@@ -11,7 +12,9 @@ type Convert struct {
 	//转换对象类型
 	TargetType reflect.Type
 	//处理器链
-	fieldHandlerChain []FieldHandler.FieldHander
+	ConvertTagChain []tag.ConvertTag
+	//持有controller
+	controller Control.Controller
 }
 
 //初始化
@@ -28,9 +31,22 @@ func (c *Convert) convert0(source any) {
 }
 
 func (c *Convert) scanSourceField() {
-	fieldNum := c.SourceType.NumField()
+
+	//sourceFieldMap := make(map[string]reflect.StructField)
+
+	//目标对象字段映射 map  fieldName -> field
+	targetFieldMap := make(map[string]reflect.StructField)
+
+	fieldNum := c.TargetType.NumField()
 
 	for i := 0; i < fieldNum; i++ {
-		//转换tag
+		tempField := c.TargetType.Field(i)
+		targetFieldMap[tempField.Name] = tempField
+	}
+
+	sourceFieldNum := c.SourceType.NumField()
+
+	for i := 0; i < sourceFieldNum; i++ {
+		//sourceTempField := c.SourceType.Field(i)
 	}
 }

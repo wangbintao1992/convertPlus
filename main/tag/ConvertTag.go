@@ -1,20 +1,37 @@
 package tag
 
+import (
+	"convertPlus/main/FieldHandler"
+	"reflect"
+)
+
 //tag实体
 type ConvertTag struct {
-	//是否缓存
+	// tag是否缓存
 	Cached bool
-	//异常回调
+	//tag 异常回调
 	ExceptionCallBack error
-	//排序
+	//tag 排序
 	Order int
-	//别名
+	//tag 别名
 	Target string
+	//tag 字段绑定的处理器名称
+	FieldHandlerName string
+	//字段元数据
+	FieldMetaData
 }
 
-/*type A struct {
-	反射tag
-	Name     string `convert:cached=true,order=0,defaultValue:{Age:123},doubleFormat:0.00`
-	Age      int    `convert:targetName=Age2,cached=false,exceptionHandler=ageExceptionHandler,handler=MysqlHandler`
-	ClassAge []C    `convert`
-}*/
+//字段元数据
+type FieldMetaData struct {
+	//字段绑定的处理器
+	fieldHandler FieldHandler.FieldHander
+	//源字段
+	sourceField reflect.StructField
+	//目标字段
+	targetField reflect.StructField
+}
+
+type A struct {
+	Name string `convert:cached=true,order=0,`
+	Age  int    `convert:targetName=Age2,cached=false,exceptionHandler=ageExceptionHandler,handler=MysqlHandler`
+}

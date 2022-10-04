@@ -8,6 +8,4 @@ type FieldHander interface {
 	convert(source any) any
 	//后置
 	After(value any) any
-	//调度
-	process(source any) any
 }
