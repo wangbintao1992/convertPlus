@@ -48,5 +48,11 @@ func (c *Convert) scanSourceField() {
 
 	for i := 0; i < sourceFieldNum; i++ {
 		//sourceTempField := c.SourceType.Field(i)
+
+		/*targetField, ok := targetFieldMap[sourceTempField.Name]
+
+		if ok {
+
+		}*/
 	}
 }
