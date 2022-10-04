@@ -17,7 +17,7 @@ type Convert struct {
 	controller Control.Controller
 }
 
-//初始化
+// 初始化
 func (c *Convert) convert(source any, targetType reflect.Type) {
 	c.TargetType = targetType
 	c.SourceType = reflect.TypeOf(source)
@@ -25,7 +25,7 @@ func (c *Convert) convert(source any, targetType reflect.Type) {
 	c.convert0(source)
 }
 
-//转换
+// 转换
 func (c *Convert) convert0(source any) {
 	c.scanSourceField()
 }
@@ -49,6 +49,7 @@ func (c *Convert) scanSourceField() {
 	for i := 0; i < sourceFieldNum; i++ {
 		//sourceTempField := c.SourceType.Field(i)
 
+		// fn(sourceTempField) -> ConvertTag
 		/*targetField, ok := targetFieldMap[sourceTempField.Name]
 
 		if ok {
@@ -56,3 +57,30 @@ func (c *Convert) scanSourceField() {
 		}*/
 	}
 }
+
+//func main() {
+//	var u User
+//	t := reflect.TypeOf(u)
+//	for i := 0; i < t.NumField(); i++ {
+//		sf := t.Field(i)
+//		tag := string(sf.Tag)
+//		// if head convert:
+//		convertRe := regexp.MustCompile("convert:")
+//		//isConvert := strings.Contains(string(tag), "convert:")
+//		//fmt.Println("test: ", string(tag))
+//		isConvert := convertRe.FindStringIndex(tag)
+//		fmt.Println("isConvert", isConvert[0])
+//		if len(isConvert) > 0 && isConvert[0] == 0 {
+//			// 处理
+//			fmt.Println("56", tag)
+//		} else {
+//			// 抛出异常
+//			panic("convert format error")
+//		}
+//	}
+//}
+//
+//type User struct {
+//	Name string `1convert:cached=true,order=0,defaultValue:{Age:123},doubleFormat:0.00`
+//	Age  int    `json:"age" bson:"b_age"`
+//}

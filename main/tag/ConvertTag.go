@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-//tag实体
+// tag实体
 type ConvertTag struct {
 	// tag是否缓存
 	Cached bool
@@ -21,7 +21,12 @@ type ConvertTag struct {
 	FieldMetaData
 }
 
-//字段元数据
+func (c *ConvertTag) getConvertTag(souceField reflect.StructField) (convertTag ConvertTag) {
+
+	return convertTag
+}
+
+// 字段元数据
 type FieldMetaData struct {
 	//字段绑定的处理器
 	fieldHandler FieldHandler.FieldHander
