@@ -21,6 +21,15 @@ type ConvertTag struct {
 	FieldMetaData
 }
 
+func (convertTag *ConvertTag) SetFieldMeta(sourceField reflect.StructField, targetField reflect.StructField) {
+	convertTag.sourceField = sourceField
+	convertTag.targetField = targetField
+}
+
+func (convertTag *ConvertTag) SetFieldHandler(handler FieldHandler.FieldHander) {
+	convertTag.fieldHandler = handler
+}
+
 func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag) {
 	return convertTag
 }

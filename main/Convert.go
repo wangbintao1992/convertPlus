@@ -2,6 +2,7 @@ package main
 
 import (
 	"convertPlus/main/Control"
+	"convertPlus/main/FieldHandler"
 	"convertPlus/main/tag"
 	"reflect"
 )
@@ -15,6 +16,14 @@ type Convert struct {
 	ConvertTagChain []tag.ConvertTag
 	//持有controller
 	controller Control.Controller
+
+	fieldHandlerCache map[string]FieldHandler.FieldHander
+}
+
+func (c *Convert) registHandler(handler ...FieldHandler.FieldHander) {
+	for _, r := range handler {
+		c.fieldHandlerCache[reflect.TypeOf(r).Name()] = r
+	}
 }
 
 // 初始化
@@ -47,14 +56,19 @@ func (c *Convert) scanSourceField() {
 	sourceFieldNum := c.SourceType.NumField()
 
 	for i := 0; i < sourceFieldNum; i++ {
-		//sourceTempField := c.SourceType.Field(i)
+		field := c.SourceType.Field(i)
+		convertTag := tag.GetConvertTag(field)
 
-		// fn(sourceTempField) -> ConvertTag
-		/*targetField, ok := targetFieldMap[sourceTempField.Name]
+		//是否目标对象有映射字段
 
-		if ok {
+		if targetField, ok := targetFieldMap[convertTag.Target]; ok {
 
-		}*/
+			convertTag.SetFieldMeta(field, targetField)
+
+			if targetHandler, findHandler := c.fieldHandlerCache[convertTag.FieldHandlerName]; findHandler {
+				convertTag.SetFieldHandler(targetHandler)
+			}
+		}
 	}
 }
 
