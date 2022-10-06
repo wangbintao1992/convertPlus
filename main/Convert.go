@@ -31,17 +31,15 @@ func (c *Convert) convert(source any, targetType reflect.Type) {
 	c.TargetType = targetType
 	c.SourceType = reflect.TypeOf(source)
 
-	c.convert0(source)
+	c.scanSourceField()
 }
 
 // 转换
 func (c *Convert) convert0(source any) {
-	c.scanSourceField()
+
 }
 
 func (c *Convert) scanSourceField() {
-
-	//sourceFieldMap := make(map[string]reflect.StructField)
 
 	//目标对象字段映射 map  fieldName -> field
 	targetFieldMap := make(map[string]reflect.StructField)
@@ -60,7 +58,6 @@ func (c *Convert) scanSourceField() {
 		convertTag := tag.GetConvertTag(field)
 
 		//是否目标对象有映射字段
-
 		if targetField, ok := targetFieldMap[convertTag.Target]; ok {
 
 			convertTag.SetFieldMeta(field, targetField)
