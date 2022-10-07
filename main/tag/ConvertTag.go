@@ -22,12 +22,12 @@ type ConvertTag struct {
 }
 
 func (convertTag *ConvertTag) SetFieldMeta(sourceField reflect.StructField, targetField reflect.StructField) {
-	convertTag.sourceField = sourceField
-	convertTag.targetField = targetField
+	convertTag.SourceField = sourceField
+	convertTag.TargetField = targetField
 }
 
 func (convertTag *ConvertTag) SetFieldHandler(handler FieldHandler.FieldHander) {
-	convertTag.fieldHandler = handler
+	convertTag.FieldHandler = handler
 }
 
 func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag) {
@@ -37,11 +37,11 @@ func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag) {
 // 字段元数据
 type FieldMetaData struct {
 	//字段绑定的处理器
-	fieldHandler FieldHandler.FieldHander
+	FieldHandler FieldHandler.FieldHander
 	//源字段
-	sourceField reflect.StructField
+	SourceField reflect.StructField
 	//目标字段
-	targetField reflect.StructField
+	TargetField reflect.StructField
 }
 
 type A struct {
