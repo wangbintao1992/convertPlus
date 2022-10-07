@@ -2,8 +2,8 @@ package main
 
 import (
 	"convertPlus/main/Control"
+	"convertPlus/main/FieldHandler"
 	"convertPlus/main/tag"
-	"fmt"
 	"reflect"
 )
 
@@ -16,24 +16,37 @@ type Convert struct {
 	ConvertTagChain []tag.ConvertTag
 	//持有controller
 	controller Control.Controller
+
+	fieldHandlerCache map[string]FieldHandler.FieldHander
+}
+
+func (c *Convert) registHandler(handler ...FieldHandler.FieldHander) {
+	for _, r := range handler {
+		c.fieldHandlerCache[reflect.TypeOf(r).Name()] = r
+	}
+
 }
 
 // 初始化
-func (c *Convert) convert(source any, targetType reflect.Type) {
-	c.TargetType = targetType
-	c.SourceType = reflect.TypeOf(source)
+func (c *Convert) convert(source any, target any) any {
+	c.TargetType = reflect.TypeOf(target).Elem()
+	c.SourceType = reflect.TypeOf(source).Elem()
 
-	c.convert0(source)
+	c.scanSourceField()
+
+	//TODO初始化控制器 context初始化
+
+	return c.convert0(source, target)
 }
 
 // 转换
-func (c *Convert) convert0(source any) {
-	c.scanSourceField()
+func (c *Convert) convert0(source any, target any) any {
+	c.controller.Control(source, target, c.ConvertTagChain)
+
+	return target
 }
 
 func (c *Convert) scanSourceField() {
-
-	//sourceFieldMap := make(map[string]reflect.StructField)
 
 	//目标对象字段映射 map  fieldName -> field
 	targetFieldMap := make(map[string]reflect.StructField)
@@ -48,18 +61,18 @@ func (c *Convert) scanSourceField() {
 	sourceFieldNum := c.SourceType.NumField()
 
 	for i := 0; i < sourceFieldNum; i++ {
-		sourceTempField := c.SourceType.Field(i)
-		convertTag, err := tag.GetConvertTag(sourceTempField)
-		if err != nil {
-			fmt.Printf("couldn't convert number: %v\n", err)
+		field := c.SourceType.Field(i)
+		convertTag, _ := tag.GetConvertTag(field)
+
+		//是否目标对象有映射字段
+		if targetField, ok := targetFieldMap[convertTag.Target]; ok {
+
+			convertTag.SetFieldMeta(field, targetField)
+
+			if targetHandler, findHandler := c.fieldHandlerCache[convertTag.FieldHandlerName]; findHandler {
+				convertTag.SetFieldHandler(targetHandler)
+			}
 		}
-		fmt.Println("\n\n\n\n\nconvertTag", convertTag)
-		// fn(sourceTempField) -> ConvertTag
-		/*targetField, ok := targetFieldMap[sourceTempField.Name]
-
-		if ok {
-
-		}*/
 	}
 }
 
