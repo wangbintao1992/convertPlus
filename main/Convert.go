@@ -3,6 +3,7 @@ package main
 import (
 	"convertPlus/main/Control"
 	"convertPlus/main/tag"
+	"fmt"
 	"reflect"
 )
 
@@ -47,8 +48,12 @@ func (c *Convert) scanSourceField() {
 	sourceFieldNum := c.SourceType.NumField()
 
 	for i := 0; i < sourceFieldNum; i++ {
-		//sourceTempField := c.SourceType.Field(i)
-
+		sourceTempField := c.SourceType.Field(i)
+		convertTag, err := tag.GetConvertTag(sourceTempField)
+		if err != nil {
+			fmt.Printf("couldn't convert number: %v\n", err)
+		}
+		fmt.Println("\n\n\n\n\nconvertTag", convertTag)
 		// fn(sourceTempField) -> ConvertTag
 		/*targetField, ok := targetFieldMap[sourceTempField.Name]
 
