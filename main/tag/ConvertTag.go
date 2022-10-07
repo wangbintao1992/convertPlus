@@ -74,6 +74,7 @@ func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag, err 
 		//panic("convert format error")
 	}
 	return convertTag, nil
+}
 func (convertTag *ConvertTag) SetFieldMeta(sourceField reflect.StructField, targetField reflect.StructField) {
 	convertTag.SourceField = sourceField
 	convertTag.TargetField = targetField
@@ -81,10 +82,6 @@ func (convertTag *ConvertTag) SetFieldMeta(sourceField reflect.StructField, targ
 
 func (convertTag *ConvertTag) SetFieldHandler(handler FieldHandler.FieldHander) {
 	convertTag.FieldHandler = handler
-}
-
-func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag) {
-	return convertTag
 }
 
 // 字段元数据

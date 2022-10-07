@@ -62,7 +62,7 @@ func (c *Convert) scanSourceField() {
 
 	for i := 0; i < sourceFieldNum; i++ {
 		field := c.SourceType.Field(i)
-		convertTag := tag.GetConvertTag(field)
+		convertTag, _ := tag.GetConvertTag(field)
 
 		//是否目标对象有映射字段
 		if targetField, ok := targetFieldMap[convertTag.Target]; ok {
