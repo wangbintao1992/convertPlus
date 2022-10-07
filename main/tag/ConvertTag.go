@@ -45,6 +45,11 @@ func getKeyAndValue(str string) (key string, value string) {
 	return key, value
 }
 
+func isBaseFiled(key string) (end bool) {
+
+	return true
+}
+
 func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag, err error) {
 	tag := string(sourceField.Tag)
 	// if head convert:
@@ -61,6 +66,21 @@ func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag, err 
 		for i := 0; i < len(res1); i++ {
 			key, value := getKeyAndValue(res1[i])
 			fmt.Println("obj", key, value)
+
+			// // tag是否缓存
+			//	Cached bool
+			//	//tag 异常回调
+			//	ExceptionCallBack error
+			//	//tag 排序
+			//	Order int
+			//	//tag 别名
+			//	Target string
+			//	//tag 字段绑定的处理器名称
+			//	FieldHandlerName string
+			//	//字段元数据
+			//	FieldMetaData
+
+			// strings.EqualFold(str1, str2)
 			//convertTag := &ConvertTag{
 			//	key: value,
 			//}
