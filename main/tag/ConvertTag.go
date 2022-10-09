@@ -52,6 +52,7 @@ func GetConvertTag(sourceField reflect.StructField) (convertTag ConvertTag, err 
 	//isConvert := strings.Contains(string(tag), "convert:")
 	//fmt.Println("test: ", tag)
 	isConvert := convertRe.FindStringIndex(tag)
+	//TODO use log
 	fmt.Println("isConvert", isConvert)
 	if len(isConvert) > 0 && isConvert[0] == 0 {
 		// 处理

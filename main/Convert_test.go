@@ -1,6 +1,7 @@
 package main
 
 import (
+	"convertPlus/main/Copy"
 	"fmt"
 	"reflect"
 	"testing"
@@ -26,4 +27,13 @@ func TestBase(t *testing.T) {
 	//Convert.scanSourceField()
 	//Convert.New
 	fmt.Println("2121")
+}
+
+func TestReflectFieldValue(t *testing.T) {
+	u := &User{Name: "james"}
+
+	i := Copy.Copy(u)
+
+	fmt.Println(&u)
+	fmt.Println(&i)
 }
